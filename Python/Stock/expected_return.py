@@ -51,8 +51,8 @@ class Stock:
         return dividend_per_month
 
     def total_return(self)->float:
-        total_dividend = self.stock_dividned()[self.total_period-1]
-        total_margin = self.stock_value()[self.total_period-1] - self.budget_month * self.total_period
+        total_dividend = self.dividend()[self.total_period-1]
+        total_margin = self.value_month()[self.total_period-1] - self.budget_month * self.total_period
         return total_dividend + total_margin
 
 #start from 0, 3 year expected returns
@@ -66,6 +66,9 @@ total_stock_num = spdr_djia.stock_num()
 total_stock_value = spdr_djia.value_month()
 total_dividend = spdr_djia.dividend()
 
-plt.plot(month, total_dividend, 'r')
-plt.plot(month, total_stock_value, 'g')
+plt.plot(month, total_dividend, 'r', label='total dividend')
+plt.plot(month, total_stock_value, 'g', label='total stock value')
+plt.xlabel('month')
+plt.ylabel('assets(usd)')
+plt.title('Total return: ' + str(spdr_djia.total_return())[:8])
 plt.show()
