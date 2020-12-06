@@ -3,20 +3,20 @@ import matplotlib.pyplot as plt
 
 class Stock:
     def __init__(self, current_price, total_budget_month, average_yearly_return, total_period, dividend_month):
-        self.current_price = current_price
+        self.current_beginning = current_price
         self.budget_month = total_budget_month
         self.average_yearly_return = average_yearly_return
         self.total_period = total_period
         self.dividend_per_stock = dividend_month
 
     #Fix this to general case
-    def current_price(self, month_passed)->int:
+    def current_price(self, month_passed)->float:
         if month_passed <= 12:
-            return self.current_price
+            return self.current_beginning
         elif month_passed > 12 and month_passed <= 24:
-            return self.current_price * (1 + self.average_yearly_return * 0.01)
+            return self.current_beginning * (1 + self.average_yearly_return * 0.01)
         elif month_passed > 24:
-            count = self.current_price * (1 + self.average_yearly_return * 0.01)
+            count = self.current_beginning * (1 + self.average_yearly_return * 0.01)
             count = count * (1 + self.average_yearly_return * 0.01)
             return count
 
@@ -35,10 +35,17 @@ class Stock:
         stock_price_month = []
         for i in range(self.total_period):
             stock_price_month.append(self.current_price(i))
-        return self.stock_num() * stock_price_month
+
+        out_list = []
+        for i in range(len(self.stock_num())):
+            out_list.append(self.stock_num()[i]*stock_price_month[i])
+        return out_list
 
     def dividend(self):
-        dividend_per_month = self.stock_num * self.dividend_per_stock
+        dividend_per_month = []
+        for i in range(len(self.stock_num())):
+            dividend_per_month.append(self.stock_num()[i] * self.dividend_per_stock)
+
         for i in range(1, len(dividend_per_month)):
             dividend_per_month[i] += dividend_per_month[i-1]
         return dividend_per_month
