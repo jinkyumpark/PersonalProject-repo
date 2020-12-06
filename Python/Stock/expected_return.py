@@ -1,3 +1,6 @@
+#Stock class calculates expected return
+#SPDR DJIA, $4000 a month, for 36 months
+
 import numpy as np
 import matplotlib.pyplot as plt
 
